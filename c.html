@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter Technical Assessment: Task Management App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Neutral -->
+    <!-- Application Structure Plan: The SPA is structured as an interactive dashboard with a fixed sidebar for navigation and a main content area. This design was chosen to break down the dense information of the exam brief into logical, digestible sections (Overview, Objectives, Requirements, etc.). This task-oriented structure allows candidates to easily navigate and reference specific parts of the assessment, which is more user-friendly and efficient than scrolling through a long document. Key interactions include clicking navigation links to dynamically display the relevant content section and hovering over the evaluation chart for details. -->
+    <!-- Visualization & Content Choices: The source report (a markdown document) outlines a technical exam. Goal: To present these instructions clearly and engagingly. Report Info -> Presentation Method: 1) Project Objectives -> Interactive Checklist Cards (HTML/Tailwind) for a task-oriented feel. 2) Evaluation Criteria -> Radar Chart (Chart.js/Canvas) to visually represent the multi-faceted nature of the assessment. Interaction: Navigation clicks switch views; chart hover provides tooltips. Justification: These choices transform a static document into a more dynamic and intuitive guide for the candidates, improving clarity and engagement. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sidebar-link.active,
+        .sidebar-link:hover {
+            background-color: #e9ecef;
+            color: #212529;
+            transform: translateX(4px);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-gray-50 p-6 border-r border-gray-200 shrink-0">
+            <h1 class="text-2xl font-bold text-gray-900 mb-8">Flutter Exam</h1>
+            <nav id="sidebarNav" class="space-y-2">
+                <a href="#introduction"
+                    class="sidebar-link active flex items-center gap-3 p-3 rounded-lg text-gray-600 font-medium">
+                    <span>🏠</span> Overview
+                </a>
+                <a href="#objectives"
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg text-gray-600 font-medium">
+                    <span>🎯</span> Project Objectives
+                </a>
+                <a href="#requirements"
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg text-gray-600 font-medium">
+                    <span>🔧</span> Technical Requirements
+                </a>
+                <a href="#evaluation"
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg text-gray-600 font-medium">
+                    <span>📊</span> Evaluation Criteria
+                </a>
+                <a href="#submission"
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg text-gray-600 font-medium">
+                    <span>🚀</span> Submission
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10 bg-white">
+            <div id="content-container">
+                <!-- Introduction Section -->
+                <section id="introduction" class="content-section active">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">To-Do List & Task Management App</h2>
+                    <p class="text-lg text-gray-600 mb-8">This technical assessment evaluates your practical skills in
+                        Flutter, focusing on core concepts like state management, data persistence, and clean
+                        architecture.</p>
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200">
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">Project Timeline</h3>
+                        <p class="text-gray-600">You are expected to complete this project within a <span
+                                class="font-bold text-blue-600">three-day period</span>.</p>
+                    </div>
+                </section>
+
+                <!-- Project Objectives Section -->
+                <section id="objectives" class="content-section">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">Project Objectives</h2>
+                    <p class="text-lg text-gray-600 mb-8">Your goal is to build a single-page Flutter application with
+                        the following key features.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Task Creation -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <h3 class="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"><span>📝</span>
+                                Task Creation</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span> <strong>Title:</strong> A
+                                    required text field for the task name.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span> <strong>Due
+                                        Date:</strong> An optional date field.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span>
+                                    <strong>Priority:</strong> A selection between High, Medium, and Low.</li>
+                            </ul>
+                        </div>
+                        <!-- Task Display -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <h3 class="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"><span>🎨</span>
+                                Task Display</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span> Display a list of all
+                                    tasks on the main screen.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span> Visually distinguish
+                                    tasks based on priority (e.g., colors).</li>
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span> Show a visual indicator
+                                    for completed tasks (e.g., strikethrough).</li>
+                            </ul>
+                        </div>
+                        <!-- Task Management -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <h3 class="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"><span>⚙️</span>
+                                Task Management</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span> Tap to edit an existing
+                                    task's details.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span> Use a checkbox to mark
+                                    tasks as complete/incomplete.</li>
+                                <li class="flex items-start gap-2"><span class="mt-1">✅</span> Provide a way to
+                                    permanently delete a task.</li>
+                            </ul>
+                        </div>
+                        <!-- Data Persistence -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <h3 class="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"><span>💾</span>
+                                Data Persistence</h3>
+                            <p class="text-gray-600">Save and load task data locally. You can use `shared_preferences`,
+                                Hive, or SQLite.</p>
+                        </div>
+                        <!-- State Management -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <h3 class="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"><span>🔄</span>
+                                State Management</h3>
+                            <p class="text-gray-600">Use a modern state management solution like Provider or Riverpod
+                                for data flow and UI updates.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Technical Requirements Section -->
+                <section id="requirements" class="content-section">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">Technical Requirements</h2>
+                    <p class="text-lg text-gray-600 mb-8">Please adhere to the following technical guidelines for your
+                        project.</p>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 flex items-center gap-4">
+                            <span class="text-2xl">🎯</span>
+                            <div>
+                                <h4 class="font-semibold text-lg">Language & Framework</h4>
+                                <p class="text-gray-600">Dart & Flutter</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 flex items-center gap-4">
+                            <span class="text-2xl">💻</span>
+                            <div>
+                                <h4 class="font-semibold text-lg">Development Environment</h4>
+                                <p class="text-gray-600">Any IDE of your choice (VS Code, Android Studio, etc.)</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 flex items-center gap-4">
+                            <span class="text-2xl">📦</span>
+                            <div>
+                                <h4 class="font-semibold text-lg">Version Control</h4>
+                                <p class="text-gray-600">You must use Git for version control and share a public GitHub
+                                    repository.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Evaluation Criteria Section -->
+                <section id="evaluation" class="content-section">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">Evaluation Criteria</h2>
+                    <p class="text-lg text-gray-600 mb-8">Your project will be evaluated based on the following
+                        criteria. We value a holistic approach to development, where functionality, code quality, and
+                        user experience are all considered important.</p>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <div class="chart-container">
+                            <canvas id="evaluationChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submission Section -->
+                <section id="submission" class="content-section">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">Submission</h2>
+                    <p class="text-lg text-gray-600 mb-8">Please follow these instructions to submit your completed
+                        project.</p>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="font-bold text-xl text-gray-800 mb-4">GitHub Repository</h3>
+                        <p class="text-gray-600 mb-4">Please share the link to your public GitHub repository containing
+                            the complete project. Ensure the repository includes a `README.md` file with clear
+                            instructions on how to set up and run the application.</p>
+                        <p class="font-semibold text-lg text-gray-800">We look forward to seeing your work!</p>
+                        <a href="https://example.com/ui-prototype" target="_blank"
+                            class="inline-block mt-4 bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">
+                            View UI Prototype
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            function updateActiveContent(hash) {
+                let targetHash = hash || '#introduction';
+
+                sidebarLinks.forEach(link => {
+                    if (link.getAttribute('href') === targetHash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                contentSections.forEach(section => {
+                    if ('#' + section.id === targetHash) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetHash = e.currentTarget.getAttribute('href');
+                    history.pushState(null, null, targetHash);
+                    updateActiveContent(targetHash);
+                });
+            });
+
+            window.addEventListener('popstate', () => {
+                updateActiveContent(window.location.hash);
+            });
+
+            updateActiveContent(window.location.hash);
+
+            const ctx = document.getElementById('evaluationChart');
+            if (ctx) {
+                const evaluationData = {
+                    labels: [
+                        'Code Quality',
+                        'Code Architecture',
+                        'Functionality',
+                        'UI/UX Design',
+                        'Git History'
+                    ],
+                    datasets: [{
+                        label: 'Evaluation Focus',
+                        data: [9, 9, 10, 8, 7],
+                        fill: true,
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        borderColor: 'rgb(59, 130, 246)',
+                        pointBackgroundColor: 'rgb(59, 130, 246)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(59, 130, 246)'
+                    }]
+                };
+
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: evaluationData,
+                    options: {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 10,
+                                grid: {
+                                    color: '#e5e7eb',
+                                },
+                                angleLines: {
+                                    color: '#e5e7eb',
+                                },
+                                pointLabels: {
+                                    font: {
+                                        size: 14,
+                                        family: 'Inter, sans-serif'
+                                    },
+                                    color: '#374151'
+                                },
+                                ticks: {
+                                    stepSize: 2,
+                                    backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                    color: '#6b7280'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `${context.chart.data.labels[context.dataIndex]}: ${context.raw}/10`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

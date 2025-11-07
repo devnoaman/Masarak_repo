@@ -1,0 +1,13 @@
+name: masarak_repo
+# resolution: workspace
+environment:
+  sdk: "^3.9.0"
+dev_dependencies:
+  melos: ^6.2.0
+workspace:
+  - packages/transporter
+  - packages/shared
+  - packages/temp/api_client
+  - packages/driver
+# dependencies:
+# connectivity: ^3.0.6

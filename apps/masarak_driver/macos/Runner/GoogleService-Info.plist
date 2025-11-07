@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAentEIrz6J3m6ci_-VAJV8WY4ShZKfqSs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>369280597019</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>iq.gwy.masarakDriver</string>
+	<key>PROJECT_ID</key>
+	<string>masarak-gwy</string>
+	<key>STORAGE_BUCKET</key>
+	<string>masarak-gwy.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:369280597019:ios:dc4346e9178be79c32ccbe</string>
+</dict>
+</plist>

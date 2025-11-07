@@ -1,0 +1,2 @@
+/Users/noaman/Repos/masark/masarak_repo/apps/masarak/android/app/.cxx/RelWithDebInfo/1c2d505u/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/noaman/Repos/masark/masarak_repo/apps/masarak/android/app/.cxx/RelWithDebInfo/1c2d505u/arm64-v8a/CMakeFiles/rebuild_cache.dir

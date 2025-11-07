@@ -1,0 +1,8 @@
+name: masarak_repo
+
+packages:
+  - apps/**
+  - packages/**
+scripts:
+    analyze:
+        exec: dart analyze .

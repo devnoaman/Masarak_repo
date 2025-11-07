@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "369280597019",
+    "project_id": "masarak-gwy",
+    "storage_bucket": "masarak-gwy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369280597019:android:2ea3139788331e7032ccbe",
+        "android_client_info": {
+          "package_name": "iq.gwy.masarak.masarak_driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEWdo0WfmA3aLJrUbCI9I0YGgrGDh6RfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369280597019:android:961c9c4babd8170132ccbe",
+        "android_client_info": {
+          "package_name": "iq.gwy.masarak_driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEWdo0WfmA3aLJrUbCI9I0YGgrGDh6RfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

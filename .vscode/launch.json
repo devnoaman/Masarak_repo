@@ -1,0 +1,94 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+    
+        {
+            "name": "masarak_repo",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "masarak",
+            "cwd": "apps/masarak",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "masarak (profile mode)",
+            "cwd": "apps/masarak",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "masarak (release mode)",
+            "cwd": "apps/masarak",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "masarak_ocr",
+            "cwd": "apps/masarak_ocr",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "masarak_ocr (profile mode)",
+            "cwd": "apps/masarak_ocr",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "masarak_ocr (release mode)",
+            "cwd": "apps/masarak_ocr",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "masarak_transporter",
+            "cwd": "apps/masarak_transporter",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "masarak_transporter (profile mode)",
+            "cwd": "apps/masarak_transporter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "masarak_transporter (release mode)",
+            "cwd": "apps/masarak_transporter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "masarak_driver",
+            "cwd": "apps/masarak_driver",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "masarak_driver (profile mode)",
+            "cwd": "apps/masarak_driver",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "masarak_driver (release mode)",
+            "cwd": "apps/masarak_driver",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
