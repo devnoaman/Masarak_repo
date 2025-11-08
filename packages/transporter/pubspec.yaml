@@ -24,6 +24,8 @@ dependencies:
   shared:
     path: ../shared
   iconsax: ^0.0.8
+  icons_font:
+    path: ../icons_font
   lottie: ^3.3.1
   flutter_svg: ^2.2.0
   sliver_tools: ^0.2.12
@@ -33,7 +35,7 @@ dependencies:
   top_snackbar_flutter: ^3.3.0
   audioplayers: ^6.5.1
   flutter_animate: ^4.5.2
-  pusher_beams: ^1.1.2
+  # pusher_beams: ^1.1.2
   # freezed_annotation: ^3.1.0
   # json_annotation: ^4.9.0
 
@@ -50,11 +52,11 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 # flutter:
-
 # To add assets to your package, add an assets section, like this:
-# assets:
-#   - images/a_dot_burr.jpeg
+assets:
+  - images/
 #   - images/a_dot_ham.jpeg
+
 #
 # For details regarding assets in packages, see
 # https://flutter.dev/to/asset-from-package

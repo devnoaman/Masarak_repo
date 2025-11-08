@@ -8,13 +8,13 @@ class RawListTile extends HookConsumerWidget {
     super.key,
     this.padding = EdgeInsets.zero,
     required this.title,
-    required this.subTitle,
+    this.subTitle,
     this.action,
   });
 
   final EdgeInsetsGeometry padding;
   final String title;
-  final String subTitle;
+  final String? subTitle;
   final Widget? action;
 
   @override
@@ -30,12 +30,13 @@ class RawListTile extends HookConsumerWidget {
           ),
           Row(
             children: [
-              Expanded(
-                child: Text(
-                  subTitle,
-                  style: context.textTheme.headlineLarge,
+              if (subTitle != null)
+                Expanded(
+                  child: Text(
+                    subTitle!,
+                    style: context.textTheme.headlineLarge,
+                  ),
                 ),
-              ),
               SizedBox(
                 child: action,
               ),

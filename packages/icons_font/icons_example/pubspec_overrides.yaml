@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: icons_font
+dependency_overrides:
+  icons_font:
+    path: ..

@@ -14,21 +14,23 @@ class SectionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
         Text(
           title,
           style: context.textTheme.bodyLarge!.copyWith(
-            fontWeight: FontWeight.w900,
-            color: context.theme.scaffoldBackgroundColor,
+            color: Color(0xFF333333),
+            fontWeight: FontWeight.w400,
           ),
         ),
         Text(
           value,
-          style: context.textTheme.bodyLarge!.copyWith(
-            fontWeight: FontWeight.w900,
-            color: context.theme.scaffoldBackgroundColor,
+          style: context.textTheme.headlineSmall!.copyWith(
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
           ),
         ),
       ],

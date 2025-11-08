@@ -1,5 +1,6 @@
 import 'package:driver/driver.dart';
 import 'package:go_router/go_router.dart';
+import 'package:masarak_driver/pages/auth/presentation/forgot_password.dart';
 import 'package:masarak_driver/pages/checks/presentation/checks_view.dart';
 import 'package:masarak_driver/pages/confirm_crossing/presentation/confirm_crossing_page.dart';
 import 'package:masarak_driver/pages/home/home_page.dart';
@@ -25,6 +26,10 @@ final screens = [
     ),
   ),
   GoRoute(path: LoginPage.route, builder: (context, state) => LoginPage()),
+  GoRoute(
+    path: ForgotPassword.route,
+    builder: (context, state) => ForgotPassword(),
+  ),
   GoRoute(
     path: ConfirmCrossingPage.route,
     builder: (context, state) => ConfirmCrossingPage(),

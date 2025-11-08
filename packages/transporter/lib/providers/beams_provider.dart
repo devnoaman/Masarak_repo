@@ -8,7 +8,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 // import 'package:masarak_driver/extentions.dart' hide NumDurationExtensions;
 
-import 'package:pusher_beams/pusher_beams.dart';
+// import 'package:pusher_beams/pusher_beams.dart';
 import 'package:shared/shared.dart' hide NumDurationExtensions;
 // import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -32,19 +32,19 @@ class NotificationsNotifier {
   startListen() async {
     // var ctx = appContext.currentState?.context;
     if (ctx != null) {
-      await PusherBeams.instance.onMessageReceivedInTheForeground(
-        _onMessageReceivedInTheForeground,
+      // await PusherBeams.instance.onMessageReceivedInTheForeground(
+      //   _onMessageReceivedInTheForeground,
 
-        //   (
-        //   Map<Object?, Object?> data,
-        // ) {
-        //   // log(data["title"].toString());
-        //   // log(data["body"].toString());
-        //   // showTopSnackBar(
-        //   //   Overlay.of(context!),
-        //   //   CustomSnackBar.success(message: 'message'),
-        //   // );
-      );
+      //   //   (
+      //   //   Map<Object?, Object?> data,
+      //   // ) {
+      //   //   // log(data["title"].toString());
+      //   //   // log(data["body"].toString());
+      //   //   // showTopSnackBar(
+      //   //   //   Overlay.of(context!),
+      //   //   //   CustomSnackBar.success(message: 'message'),
+      //   //   // );
+      // );
     }
   }
 
@@ -87,9 +87,9 @@ class NotificationsNotifier {
     var meRes = me?.toResModel;
     var userId = meRes?.user?.id;
     // TODO return this
-    await PusherBeams.instance.start('fd990511-0ba8-4220-96cf-88b58791298a');
-    await PusherBeams.instance.setDeviceInterests(['all-users', '${userId}']);
-    print(await PusherBeams.instance.getDeviceInterests());
+    // await PusherBeams.instance.start('fd990511-0ba8-4220-96cf-88b58791298a');
+    // await PusherBeams.instance.setDeviceInterests(['all-users', '${userId}']);
+    // print(await PusherBeams.instance.getDeviceInterests());
     // await PusherBeams.instance.start('5e06a5dc-6cf7-4bc1-9db5-026ebb36d468');
     // await PusherBeams.instance.setDeviceInterests(['hello']);
     // print(await PusherBeams.instance.getDeviceInterests());

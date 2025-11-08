@@ -8,6 +8,7 @@ part of 'returns_filter_data.dart';
 
 _ReturnsFilterData _$ReturnsFilterDataFromJson(Map<String, dynamic> json) =>
     _ReturnsFilterData(
+      tripName: json['trip_name'] as String?,
       containerNumber: json['containerNumber'] as String?,
       driver: json['driver'] as Map<String, dynamic>?,
       truck: json['truck'] as Map<String, dynamic>?,
@@ -16,6 +17,7 @@ _ReturnsFilterData _$ReturnsFilterDataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ReturnsFilterDataToJson(_ReturnsFilterData instance) =>
     <String, dynamic>{
+      'trip_name': instance.tripName,
       'containerNumber': instance.containerNumber,
       'driver': instance.driver,
       'truck': instance.truck,

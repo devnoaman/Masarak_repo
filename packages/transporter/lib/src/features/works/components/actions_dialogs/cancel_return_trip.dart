@@ -40,7 +40,7 @@ class CancelReturnTrip extends HookConsumerWidget {
                     'الغاء رحلة عودة الفارغ',
                     style: context.textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 20,
                     ),
                   ),
@@ -48,7 +48,7 @@ class CancelReturnTrip extends HookConsumerWidget {
                     'هل انت متأكد من الغاء الرحلة',
                     style: context.textTheme.bodyLarge!.copyWith(
                       // fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 20,
                     ),
                   ),
@@ -57,7 +57,7 @@ class CancelReturnTrip extends HookConsumerWidget {
                     '${trip.name}',
                     style: context.textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 20,
                     ),
                   ),
@@ -66,18 +66,21 @@ class CancelReturnTrip extends HookConsumerWidget {
                     'لا يمكن التراجع عن هذا الاجراء',
                     style: context.textTheme.bodyLarge!.copyWith(
                       // fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 20,
                     ),
                   ),
-                  8.hGap,
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  16.hGap,
+                  Divider(
+                    height: 1.5,
+                    color: Colors.grey.shade500,
+                  ),
+                  IntrinsicHeight(
                     child: Row(
                       spacing: 8,
                       children: [
                         Expanded(
-                          child: ElevatedButton(
+                          child: TextButton(
                             onPressed: switch (state) {
                               Initial<String, void>() ||
                               Error<String, void>() => () async {
@@ -92,20 +95,17 @@ class CancelReturnTrip extends HookConsumerWidget {
                                   Navigator.of(context).pop();
                                 }
                               },
-
+                    
                               _ => null,
                             },
                             style: ButtonStyle(
                               elevation: WidgetStatePropertyAll(0),
-
-                              backgroundColor: WidgetStatePropertyAll(
-                                context.theme.primaryColor,
-                              ),
+                    
                               textStyle: WidgetStatePropertyAll(
                                 context.textTheme.bodyLarge!,
                               ),
                               foregroundColor: WidgetStatePropertyAll(
-                                context.theme.scaffoldBackgroundColor,
+                                Colors.black,
                               ),
                             ),
                             child: switch (state) {
@@ -114,34 +114,32 @@ class CancelReturnTrip extends HookConsumerWidget {
                                   backgroundColor: Colors.white,
                                 ),
                               ),
-
+                    
                               _ => Text(
                                 'تأكيد',
                               ),
                             },
                           ),
                         ),
-
+                    
+                        VerticalDivider(
+                          width: 1.5,
+                          thickness: 1,
+                          color: Colors.grey.shade500,
+                        ),
+                    
                         Expanded(
-                          child: ElevatedButton(
+                          child: TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
                             style: ButtonStyle(
                               elevation: WidgetStatePropertyAll(0),
-
-                              backgroundColor: WidgetStatePropertyAll(
-                                Colors.red.withAlpha(50),
-                              ),
-
+                    
                               textStyle: WidgetStatePropertyAll(
                                 context.textTheme.bodyLarge!,
                               ),
-                              side: WidgetStatePropertyAll(
-                                BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
+                    
                               foregroundColor: WidgetStatePropertyAll(
                                 Colors.red,
                               ),

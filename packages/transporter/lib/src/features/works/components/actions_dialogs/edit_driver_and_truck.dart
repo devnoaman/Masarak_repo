@@ -18,112 +18,152 @@ class EditDriverAndTruck extends HookConsumerWidget {
     var state = ref.watch(updateDriverTruckProvider);
     var driver = useState<Map<String, dynamic>>({});
     var truck = useState<Map<String, dynamic>>({});
-    return PopScope(
-      onPopInvokedWithResult: (didPop, result) {
-        ref.invalidate(updateDriverTruckProvider);
-      },
-      child: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'تعديل السائق / الشاحنة',
+          style: context.textTheme.bodyLarge!.copyWith(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+          ),
         ),
-        child: SafeArea(
-          child: SizedBox(
-            width: context.width,
-            child: Padding(
-              padding: 8.0.symetric,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  8.hGap,
-                  Text(
-                    'تعديل السائق / الشاحنة',
-                    style: context.textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                  8.hGap,
-                  SuggestableTextField(
-                    label: 'السائق',
-                    keyToView: 'name',
-                    onSelected: (value) {
-                      driver.value = value;
-                    },
-                    prob: LinkProb(
-                      modelName: '/search-drivers-return',
-                      fieldName: 'ا',
-                    ),
-                  ),
-                  8.hGap,
-                  SuggestableTextField(
-                    label: 'الشاحنة',
-                    keyToView: 'plate',
-                    onSelected: (value) {
-                      print('selected value : $value');
-                      truck.value = value;
-                    },
-
-                    prob: LinkProb(
-                      modelName: '/search-trucks',
-                      fieldName: '1000',
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: switch (state) {
-                        Initial<String, void>() ||
-                        Error<String, void>() => () async {
-                          var result = await ref
-                              .read(updateDriverTruckProvider.notifier)
-                              .setInformation(
-                                tripid: trip.tripUuid ?? '',
-                                tripName: trip.name ?? '',
-                                truckid: truck.value['id'],
-                                driverId: driver.value['id'],
-                                isReturn: false,
-                              );
-                          if (true) {
-                            Navigator.of(context).pop();
-                          }
-                        },
-
-                        _ => null,
-                      },
-                      style: ButtonStyle(
-                        elevation: WidgetStatePropertyAll(0),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(
-                            context.width,
-                            55,
-                          ),
-                        ),
-                        backgroundColor: WidgetStatePropertyAll(
-                          context.theme.primaryColor,
-                        ),
-                        textStyle: WidgetStatePropertyAll(
-                          context.textTheme.bodyLarge!,
-                        ),
-                        foregroundColor: WidgetStatePropertyAll(
-                          context.theme.scaffoldBackgroundColor,
-                        ),
+        centerTitle: true,
+      ),
+      body: PopScope(
+        onPopInvokedWithResult: (didPop, result) {
+          ref.invalidate(updateDriverTruckProvider);
+        },
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: 12,
+            left: 16,
+            right: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Container(
+            padding: 16.allPadding,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 24,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'السائق',
+                      style: context.textTheme.bodyLarge!.copyWith(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w400,
                       ),
-                      child: switch (state) {
-                        Loading<String, void>() => SizedBox(
-                          child: CircularProgressIndicator.adaptive(
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
-
-                        _ => Text(
-                          'تأكيد',
-                        ),
-                      },
                     ),
-                  ), //
-                ],
-              ),
+                    SuggestableTextField(
+                      label: 'اختر السائق',
+                      keyToView: 'name',
+                      initialValue: {
+                        "mobile": trip.driver?.split('/').last ?? '---',
+                        "name": trip.driver?.split('/').first ?? '---',
+                      },
+                      onSelected: (value) {
+                        driver.value = value;
+                      },
+                      style: SuggestableTextFieldStyle.fullScreen,
+                      showCheckbox: true,
+                      prob: LinkProb(
+                        modelName: '/search-drivers-return',
+                        fieldName: 'ا',
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'الشاحنة',
+                      style: context.textTheme.bodyLarge!.copyWith(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SuggestableTextField(
+                      label: 'اختر الشاحنة',
+                      keyToView: 'plate',
+                      initialValue: {
+                        "id": trip.localTruck?.id ?? '---',
+                        "plate": trip.localTruck?.plate ?? '---',
+                      },
+                      onSelected: (value) {
+                        print('selected value : $value');
+                        truck.value = value;
+                      },
+                      style: SuggestableTextFieldStyle.fullScreen,
+                      showCheckbox: true,
+                      prob: LinkProb(
+                        modelName: '/search-trucks',
+                        fieldName: '1000',
+                      ),
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: switch (state) {
+                    Initial<String, void>() ||
+                    Error<String, void>() => () async {
+                      var result = await ref
+                          .read(updateDriverTruckProvider.notifier)
+                          .setInformation(
+                            tripid: trip.tripUuid ?? '',
+                            tripName: trip.name ?? '',
+                            truckid: truck.value['id'],
+                            driverId: driver.value['id'],
+                            isReturn: false,
+                          );
+                      if (true) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+
+                    _ => null,
+                  },
+                  style: ButtonStyle(
+                    elevation: WidgetStatePropertyAll(0),
+                    minimumSize: WidgetStatePropertyAll(
+                      Size(
+                        context.width,
+                        55,
+                      ),
+                    ),
+                    backgroundColor: WidgetStatePropertyAll(
+                      context.theme.primaryColor,
+                    ),
+                    textStyle: WidgetStatePropertyAll(
+                      context.textTheme.bodyLarge!,
+                    ),
+                    foregroundColor: WidgetStatePropertyAll(Colors.black),
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(20),
+                      ),
+                    ),
+                  ),
+                  child: switch (state) {
+                    Loading<String, void>() => SizedBox(
+                      child: CircularProgressIndicator.adaptive(
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    _ => Text(
+                      'تأكيد',
+                    ),
+                  },
+                ), //
+              ],
             ),
           ),
         ),

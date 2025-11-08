@@ -19,126 +19,172 @@ class EditEmptyReturn extends HookConsumerWidget {
     var state = ref.watch(updateReturnContainerProvider);
     var container = useState<Map<String, dynamic>?>({});
     var printAgent = useState<Map<String, dynamic>?>({});
-    return PopScope(
-      onPopInvokedWithResult: (didPop, result) {
-        ref.invalidate(updateReturnContainerProvider);
-      },
-      child: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'تحرير عودة الفارغ',
+          style: context.textTheme.bodyLarge!.copyWith(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+          ),
         ),
-        child: SafeArea(
-          child: SizedBox(
-            width: context.width,
-            child: Padding(
-              padding: 8.0.symetric,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  8.hGap,
-                  Text(
-                    'تحرير عودة الفارغ',
-                    style: context.textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                  8.hGap,
-                  SuggestableTextField(
-                    label: 'الحاوية',
-                    keyToView: 'name',
-                    onSelected: (value) {
-                      print(value);
-                      container.value = value;
-                    },
-                    prob: LinkProb(
-                      modelName: '/search-trips',
-                      fieldName: 'e',
-                    ),
-                  ),
-                  SuggestableTextField(
-                    label: 'مخول الطباعة',
-                    keyToView: 'name',
-                    onSelected: (value) {
-                      print(value);
-
-                      printAgent.value = value;
-                    },
-                    prob: LinkProb(
-                      modelName: '/search-printing-agents',
-                      fieldName: 'أ',
-                    ),
-                  ),
-                  8.hGap,
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: switch (state) {
-                        Initial<String, void>() ||
-                        Error<String, void>() => () async {
-                          if (container.value == null ||
-                              printAgent.value == null) {
-                            return;
-                          }
-                          var result = await ref
-                              .read(updateReturnContainerProvider.notifier)
-                              .setInformation(
-                                pathId: trip.tripUuid,
-                                berthId: container.value?['berth_id'],
-                                containerNumber:
-                                    container.value?['container_number'],
-                                containerSize:
-                                    container.value?['container_size'],
-                                driver: trip.driver,
-                                printingAgent: printAgent.value?['id'],
-                                secondContainerNumber:
-                                    container.value?['second_container_number'],
-                                secondContainerSize:
-                                    container.value?['second_container_size'],
-                                truck: trip.truck,
-                              );
-                          if (result) {
-                            Navigator.of(context).pop();
-                          }
-                        },
-
-                        _ => null,
-                      },
-                      style: ButtonStyle(
-                        elevation: WidgetStatePropertyAll(0),
-                        minimumSize: WidgetStatePropertyAll(
-                          Size(
-                            context.width,
-                            55,
-                          ),
-                        ),
-                        backgroundColor: WidgetStatePropertyAll(
-                          context.theme.primaryColor,
-                        ),
-                        textStyle: WidgetStatePropertyAll(
-                          context.textTheme.bodyLarge!,
-                        ),
-                        foregroundColor: WidgetStatePropertyAll(
-                          context.theme.scaffoldBackgroundColor,
-                        ),
+        centerTitle: true,
+      ),
+      body: PopScope(
+        onPopInvokedWithResult: (didPop, result) {
+          ref.invalidate(updateReturnContainerProvider);
+        },
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: 12,
+            left: 16,
+            right: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Container(
+            padding: 16.allPadding,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 24,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'الحاوية',
+                      style: context.textTheme.bodyLarge!.copyWith(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w400,
                       ),
-                      child: switch (state) {
-                        Loading<String, void>() => SizedBox(
-                          child: CircularProgressIndicator.adaptive(
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
-
-                        _ => Text(
-                          'تأكيد',
-                        ),
-                      },
                     ),
-                  ), //
-                  //
-                ],
-              ),
+                    SuggestableTextField(
+                      label: 'اختر الحاوية',
+                      keyToView: 'container_number',
+                      initialValue: {
+                        "container_size":
+                            trip.containerDetails?.containerSize ?? '---',
+                        "container_number":
+                            trip.containerDetails?.containerNumber ?? '---',
+                      },
+                      style: SuggestableTextFieldStyle.fullScreen,
+                      showCheckbox: true,
+                      onSelected: (value) {
+                        print(value);
+                        container.value = value;
+                      },
+                      prob: LinkProb(
+                        modelName: '/search-trips',
+                        fieldName: 'e',
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'مخول الطباعة',
+                      style: context.textTheme.bodyLarge!.copyWith(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SuggestableTextField(
+                      label: 'اختر مخول طباعة',
+                      keyToView: 'name',
+                      initialValue: {
+                        "id": trip.localPrinting?.printingAgent?.id ?? '---',
+                        "name":
+                            trip.localPrinting?.printingAgent?.name ?? '---',
+                        "mobile":
+                            trip.localPrinting?.printingAgent?.mobile ?? '---',
+                      },
+                      style: SuggestableTextFieldStyle.fullScreen,
+                      showCheckbox: true,
+                      onSelected: (value) {
+                        print(value);
+
+                        printAgent.value = value;
+                      },
+                      prob: LinkProb(
+                        modelName: '/search-printing-agents',
+                        fieldName: 'أ',
+                      ),
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: switch (state) {
+                    Initial<String, void>() ||
+                    Error<String, void>() => () async {
+                      if (container.value == null || printAgent.value == null) {
+                        return;
+                      }
+                      var result = await ref
+                          .read(updateReturnContainerProvider.notifier)
+                          .setInformation(
+                            pathId: trip.tripUuid,
+                            berthId: container.value?['berth_id'],
+                            containerNumber:
+                                container.value?['container_number'],
+                            containerSize: container.value?['container_size'],
+                            driver: trip.driver,
+                            printingAgent: printAgent.value?['id'],
+                            secondContainerNumber:
+                                container.value?['second_container_number'],
+                            secondContainerSize:
+                                container.value?['second_container_size'],
+                            truck: trip.truck,
+                          );
+                      if (result) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+
+                    _ => null,
+                  },
+                  style: ButtonStyle(
+                    elevation: WidgetStatePropertyAll(0),
+                    minimumSize: WidgetStatePropertyAll(
+                      Size(
+                        context.width,
+                        55,
+                      ),
+                    ),
+                    backgroundColor: WidgetStatePropertyAll(
+                      context.theme.primaryColor,
+                    ),
+                    textStyle: WidgetStatePropertyAll(
+                      context.textTheme.bodyLarge!,
+                    ),
+                    foregroundColor: WidgetStatePropertyAll(
+                      Colors.black,
+                    ),
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(20),
+                      ),
+                    ),
+                  ),
+                  child: switch (state) {
+                    Loading<String, void>() => SizedBox(
+                      child: CircularProgressIndicator.adaptive(
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+
+                    _ => Text(
+                      'تأكيد',
+                    ),
+                  },
+                ), //
+                //
+              ],
             ),
           ),
         ),

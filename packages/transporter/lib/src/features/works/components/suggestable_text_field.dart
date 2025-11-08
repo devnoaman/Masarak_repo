@@ -26,22 +26,40 @@ class LinkProb {
   }
 }
 
+enum SuggestableTextFieldStyle {
+  normal,
+  fullScreen,
+}
+
 class SuggestableTextField extends HookConsumerWidget {
   const SuggestableTextField({
     required this.prob,
     super.key,
     this.initialValue,
+    this.itemParser,
     this.label,
     this.onSelected,
+    this.queryParameters,
     this.validator,
     required this.keyToView,
+    this.style = SuggestableTextFieldStyle.normal,
+    this.showCheckbox = false,
+    this.suggestionBuilder,
+    this.onSave,
   });
+
+  final SuggestionWidgetBuilder suggestionBuilder;
   final Map<String, dynamic>? initialValue;
+  final Map<String, dynamic>? queryParameters;
+  final dynamic Function(dynamic)? itemParser;
   final String? label;
   final String keyToView;
   final LinkProb prob;
   final void Function(dynamic value)? onSelected;
   final String? Function(String? value)? validator;
+  final SuggestableTextFieldStyle style;
+  final bool showCheckbox;
+  final void Function(Map<String, dynamic> selectedItem)? onSave;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,14 +73,13 @@ class SuggestableTextField extends HookConsumerWidget {
               : null,
         );
 
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: RawTextField(
+        if (style == SuggestableTextFieldStyle.normal) {
+          return RawTextField(
             readOnly: true,
-            style: context.textTheme.bodyLarge!.copyWith(color: Colors.white),
+            style: context.textTheme.bodyLarge!.copyWith(color: Colors.black),
             validator: validator,
             controller: cnt,
-            suffix: Icon(Iconsax.arrow_down_1),
+            suffix: const Icon(Iconsax.arrow_down_1),
             hintText: label,
             onTap: () async {
               var res = await showModalBottomSheet(
@@ -72,6 +89,9 @@ class SuggestableTextField extends HookConsumerWidget {
                 builder: (context) => SuggestionFinder(
                   prob: prob,
                   keyToView: keyToView,
+                  suggestionBuilder: suggestionBuilder,
+                  initialValue: initialValue,
+                  requestBody: queryParameters,
                 ),
               );
               if (res != null) {
@@ -79,8 +99,70 @@ class SuggestableTextField extends HookConsumerWidget {
                 onSelected?.call(res);
               }
             },
-          ),
-        );
+          );
+        } else {
+          return GestureDetector(
+            onTap: () async {
+              var res = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => Scaffold(
+                    appBar: AppBar(title: Text(label ?? 'Select value')),
+                    body: SuggestionFinder(
+                      prob: prob,
+                      keyToView: keyToView,
+                      suggestionBuilder: suggestionBuilder,
+                      requestBody: queryParameters,
+
+                      onSave: onSave,
+                    ),
+                  ),
+                ),
+              );
+              if (res != null) {
+                cnt.text = res[keyToView] ?? '';
+                onSelected?.call(res);
+              }
+            },
+            child: Container(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      cnt.text.isEmpty ? (label ?? '') : cnt.text,
+                      style: context.textTheme.bodyLarge,
+                    ),
+                  ),
+                  Icon(Icons.arrow_forward),
+                ],
+              ),
+            ),
+          );
+        }
+
+        // return RawTextField(
+        //   readOnly: true,
+        //   style: context.textTheme.bodyLarge!.copyWith(color: Colors.black),
+        //   validator: validator,
+        //   controller: cnt,
+        //   suffix: Icon(Iconsax.arrow_down_1),
+        //   hintText: label,
+        //   onTap: () async {
+        //     var res = await showModalBottomSheet(
+        //       context: context,
+        //       backgroundColor: context.theme.scaffoldBackgroundColor,
+        //       isScrollControlled: true,
+        //       builder: (context) => SuggestionFinder(
+        //         prob: prob,
+        //         keyToView: keyToView,
+        //       ),
+        //     );
+        //     if (res != null) {
+        //       cnt.text = res[keyToView] ?? '';
+        //       onSelected?.call(res);
+        //     }
+        //   },
+        // );
       },
     );
   }

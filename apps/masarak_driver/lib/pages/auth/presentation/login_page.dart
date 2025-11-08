@@ -1,12 +1,17 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:masarak_driver/network/api/endpoints.dart';
 import 'package:masarak_driver/pages/auth/components/validation.dart';
+import 'package:masarak_driver/pages/auth/presentation/forgot_password.dart';
 import 'package:masarak_driver/pages/auth/providers/login_provider.dart';
 import 'package:masarak_driver/extentions.dart' hide NumDurationExtensions;
+import 'package:masarak_driver/pages/auth/providers/package_info_provider.dart';
 import 'package:masarak_driver/responsive.dart';
 import 'package:shared/src/models/global_state/global_state.dart';
 
@@ -19,10 +24,12 @@ class LoginPage extends HookConsumerWidget {
     final _formkey = useMemoized(() => GlobalKey<FormState>());
     // var kkey = GlobalKey<FormState>();
     final loginState = ref.watch(loginProvider);
+    final packageInfo = ref.watch(packageInfoProvider);
     final notifier = ref.read(loginProvider.notifier);
     final userName = useTextEditingController();
     final password = useTextEditingController();
     final securePassword = useState(true);
+
     return Scaffold(
       backgroundColor: Color(0xff2F2F7F),
       resizeToAvoidBottomInset: false,
@@ -150,7 +157,19 @@ class LoginPage extends HookConsumerWidget {
                               ),
                             ),
                           ).animate(delay: 500.milliseconds).fade(),
-                          36.hGap,
+
+                          Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: TextButton(
+                              onPressed: () {
+                                context.push(ForgotPassword.route);
+                              },
+
+                              child: Text('هل نسيت كلمة المرور؟'),
+                            ),
+                          ),
+
+                          // 36.hGap,
                           RawMaterialButton(
                             fillColor: const Color(0xff4EC2C1),
                             // constraints: BoxConstraints(
@@ -229,6 +248,19 @@ class LoginPage extends HookConsumerWidget {
                       ),
                     ),
                   ).animate(delay: 500.milliseconds).scaleY().fade(),
+                ),
+                packageInfo.when(
+                  data: (data) {
+                    var url = Endpoints.baseUrl.split('://').last[0];
+                    return Text(
+                      '$url-${data.version}+${data.buildNumber}',
+                      style: context.textTheme.bodySmall!.copyWith(
+                        color: Colors.white,
+                      ),
+                    ).animate(delay: 650.milliseconds).fade().slideY();
+                  },
+                  loading: () => SizedBox.shrink(),
+                  error: (error, stackTrace) => SizedBox.shrink(),
                 ),
                 Spacer(),
                 Row(

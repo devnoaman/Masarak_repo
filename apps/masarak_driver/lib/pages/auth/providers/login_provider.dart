@@ -73,44 +73,8 @@ class LoginNotifier extends StateNotifier<GlobalState> {
         },
       );
       Configuration.refreshData = {"mobile": phoneNumber};
-      // final response = await dio.post(
-      //   Endpoints.login,
-      //   data: {
-      //     "mobile": phoneNumber,
-      //     "password": password,
-      //     // "usr": "azamil@transforat.com",
-      //     // "pwd": "adnanzamil",
-      //   },
-      // );
 
-      // log(response.data.toString());
-      // if (response.statusCode == 200) {
-      //   AuthInfo.setAll(phoneNumber, password, response.data['token'], null);
-      //   var result = User.fromJson(response.data['user']);
-      //   AuthInfo.setAll(
-      //     phoneNumber,
-      //     password,
-      //     response.data['token'],
-      //     null,
-      //     result.profilePhotoUrl,
-      //   );
-      // state = state.copyWith(loading: false);
       GlobalState.loaded(data: null);
-      //   state = state.copyWith(userInfo: result, loading: false);
-      //   ref.read(routerProvider).go(ScaffoldingApp.route);
-
-      // } else {
-      //   state = state.copyWith(loading: false, hasError: true);
-      //   showTopSnackBar(
-      //     Overlay.of(context),
-      //     CustomSnackBar.error(
-      //       message: ServerFailure.fromCode(
-      //         response.statusCode,
-      //         response,
-      //       ).message,
-      //     ),
-      //   );
-      // }
     } on DioException catch (e, s) {
       print(e);
       print(s);

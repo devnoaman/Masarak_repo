@@ -1,4 +1,0 @@
-# melos_managed_dependency_overrides: easy_stepper
-dependency_overrides:
-  easy_stepper:
-    path: ../../packages/easy_stepper-0.8.5+1

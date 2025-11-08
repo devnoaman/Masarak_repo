@@ -20,3 +20,6 @@ export 'package:paginated_list/paginated_list.dart';
 export './src/models/return_query_dto/return_query_dto.dart';
 export 'src/models/returns_filter_data/returns_filter_data.dart';
 export 'src/models/login_res/login_res.dart';
+export 'src/components/components.dart';
+export 'src/utils/utils.dart';
+export 'src/components/home_widget_frame.dart';

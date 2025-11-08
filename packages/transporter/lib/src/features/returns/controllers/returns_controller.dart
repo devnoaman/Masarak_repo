@@ -9,6 +9,7 @@ class ReturnsController extends Endpoint<PaginatedRes<ReturnTripModel>?> {
         authenticated: true,
         responseDecoder: (data) {
           print(data);
+
           return PaginatedRes.fromJson(
             data['returnTrips'],
             (r) {

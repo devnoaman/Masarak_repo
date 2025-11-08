@@ -70,6 +70,8 @@ PODS:
   - nanopb/decode (3.30910.0)
   - nanopb/encode (3.30910.0)
   - NWWebSocket (0.5.7)
+  - objective_c (0.0.1):
+    - Flutter
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -86,6 +88,11 @@ PODS:
     - NWWebSocket (~> 0.5.7)
     - TweetNacl (~> 1.0.0)
   - PushNotifications (4.0.0)
+  - Sentry/HybridSDK (8.56.2)
+  - sentry_flutter (9.8.0):
+    - Flutter
+    - FlutterMacOS
+    - Sentry/HybridSDK (= 8.56.2)
   - sqflite_darwin (0.0.4):
     - Flutter
     - FlutterMacOS
@@ -99,10 +106,12 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - objective_c (from `.symlinks/plugins/objective_c/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - pusher_beams_ios (from `.symlinks/plugins/pusher_beams_ios/ios`)
   - pusher_channels_flutter (from `.symlinks/plugins/pusher_channels_flutter/ios`)
+  - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
   - TweetNacl (~> 1.0)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
@@ -121,6 +130,7 @@ SPEC REPOS:
     - PromisesObjC
     - PusherSwift
     - PushNotifications
+    - Sentry
     - TweetNacl
 
 EXTERNAL SOURCES:
@@ -134,6 +144,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  objective_c:
+    :path: ".symlinks/plugins/objective_c/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -142,6 +154,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/pusher_beams_ios/ios"
   pusher_channels_flutter:
     :path: ".symlinks/plugins/pusher_channels_flutter/ios"
+  sentry_flutter:
+    :path: ".symlinks/plugins/sentry_flutter/ios"
   sqflite_darwin:
     :path: ".symlinks/plugins/sqflite_darwin/darwin"
   wakelock_plus:
@@ -162,6 +176,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   NWWebSocket: b4741420f1976e1dff4da3edad00c401e4f1d769
+  objective_c: 77e887b5ba1827970907e10e832eec1683f3431d
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -169,6 +184,8 @@ SPEC CHECKSUMS:
   pusher_channels_flutter: 01297e6e420e0ad61a6e5901e27bb272a6f58ec2
   PusherSwift: fa3d5f6587c20ad5790de87a5c9b150367b5f0f5
   PushNotifications: 2b2174b28bf48b1fe552686d1f95c53d62a4781d
+  Sentry: b53951377b78e21a734f5dc8318e333dbfc682d7
+  sentry_flutter: f074f75557daea0e1dd9607381a05cc0e3e456fe
   sqflite_darwin: 5a7236e3b501866c1c9befc6771dfd73ffb8702d
   TweetNacl: 3abf4d1d2082b0114e7a67410e300892448951e6
   wakelock_plus: 76957ab028e12bfa4e66813c99e46637f367fc7e

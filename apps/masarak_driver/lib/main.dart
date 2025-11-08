@@ -9,18 +9,20 @@ import 'package:masarak_driver/app/router/router.dart';
 import 'package:masarak_driver/const.dart';
 import 'package:masarak_driver/firebase_options.dart';
 import 'package:masarak_driver/network/api/endpoints.dart';
-import 'package:masarak_driver/pages/home/controllers/get_server_url_controller.dart';
 import 'package:masarak_driver/pages/notifications/providers/sqflite_provider.dart';
-import 'package:masarak_driver/pusher_service.dart';
 import 'package:masarak_driver/services/sqflite_service.dart';
 import 'package:masarak_driver/services/storage/theme_storage.dart';
-import 'package:pusher_beams/pusher_beams.dart';
+// import 'package:pusher_beams/pusher_beams.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
-
-import 'providers/beams_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SentryFlutter.init((options) {
+    options.dsn = kDebugMode
+        ? 'https://ecf4b722438a94c1a5ba0f297ba39747@o4506315083743232.ingest.us.sentry.io/4510328777146368'
+        : 'https://2ee9650ad57dce97335682700b7647c2@o4506315083743232.ingest.us.sentry.io/4510328775311360';
+  });
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Configuration.baseUrl = Endpoints.baseUrl;

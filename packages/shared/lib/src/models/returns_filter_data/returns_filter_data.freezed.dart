@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ReturnsFilterData {
 
- String? get containerNumber; Map<String, dynamic>? get driver; Map<String, dynamic>? get truck; Map<String, dynamic>? get berth;
+@JsonKey(name: 'trip_name') String? get tripName; String? get containerNumber; Map<String, dynamic>? get driver; Map<String, dynamic>? get truck; Map<String, dynamic>? get berth;
 /// Create a copy of ReturnsFilterData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ReturnsFilterDataCopyWith<ReturnsFilterData> get copyWith => _$ReturnsFilterDat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReturnsFilterData&&(identical(other.containerNumber, containerNumber) || other.containerNumber == containerNumber)&&const DeepCollectionEquality().equals(other.driver, driver)&&const DeepCollectionEquality().equals(other.truck, truck)&&const DeepCollectionEquality().equals(other.berth, berth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReturnsFilterData&&(identical(other.tripName, tripName) || other.tripName == tripName)&&(identical(other.containerNumber, containerNumber) || other.containerNumber == containerNumber)&&const DeepCollectionEquality().equals(other.driver, driver)&&const DeepCollectionEquality().equals(other.truck, truck)&&const DeepCollectionEquality().equals(other.berth, berth));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,containerNumber,const DeepCollectionEquality().hash(driver),const DeepCollectionEquality().hash(truck),const DeepCollectionEquality().hash(berth));
+int get hashCode => Object.hash(runtimeType,tripName,containerNumber,const DeepCollectionEquality().hash(driver),const DeepCollectionEquality().hash(truck),const DeepCollectionEquality().hash(berth));
 
 @override
 String toString() {
-  return 'ReturnsFilterData(containerNumber: $containerNumber, driver: $driver, truck: $truck, berth: $berth)';
+  return 'ReturnsFilterData(tripName: $tripName, containerNumber: $containerNumber, driver: $driver, truck: $truck, berth: $berth)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ReturnsFilterDataCopyWith<$Res>  {
   factory $ReturnsFilterDataCopyWith(ReturnsFilterData value, $Res Function(ReturnsFilterData) _then) = _$ReturnsFilterDataCopyWithImpl;
 @useResult
 $Res call({
- String? containerNumber, Map<String, dynamic>? driver, Map<String, dynamic>? truck, Map<String, dynamic>? berth
+@JsonKey(name: 'trip_name') String? tripName, String? containerNumber, Map<String, dynamic>? driver, Map<String, dynamic>? truck, Map<String, dynamic>? berth
 });
 
 
@@ -65,9 +65,10 @@ class _$ReturnsFilterDataCopyWithImpl<$Res>
 
 /// Create a copy of ReturnsFilterData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? containerNumber = freezed,Object? driver = freezed,Object? truck = freezed,Object? berth = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? tripName = freezed,Object? containerNumber = freezed,Object? driver = freezed,Object? truck = freezed,Object? berth = freezed,}) {
   return _then(_self.copyWith(
-containerNumber: freezed == containerNumber ? _self.containerNumber : containerNumber // ignore: cast_nullable_to_non_nullable
+tripName: freezed == tripName ? _self.tripName : tripName // ignore: cast_nullable_to_non_nullable
+as String?,containerNumber: freezed == containerNumber ? _self.containerNumber : containerNumber // ignore: cast_nullable_to_non_nullable
 as String?,driver: freezed == driver ? _self.driver : driver // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,truck: freezed == truck ? _self.truck : truck // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,berth: freezed == berth ? _self.berth : berth // ignore: cast_nullable_to_non_nullable
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? containerNumber,  Map<String, dynamic>? driver,  Map<String, dynamic>? truck,  Map<String, dynamic>? berth)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'trip_name')  String? tripName,  String? containerNumber,  Map<String, dynamic>? driver,  Map<String, dynamic>? truck,  Map<String, dynamic>? berth)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ReturnsFilterData() when $default != null:
-return $default(_that.containerNumber,_that.driver,_that.truck,_that.berth);case _:
+return $default(_that.tripName,_that.containerNumber,_that.driver,_that.truck,_that.berth);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.containerNumber,_that.driver,_that.truck,_that.berth);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? containerNumber,  Map<String, dynamic>? driver,  Map<String, dynamic>? truck,  Map<String, dynamic>? berth)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'trip_name')  String? tripName,  String? containerNumber,  Map<String, dynamic>? driver,  Map<String, dynamic>? truck,  Map<String, dynamic>? berth)  $default,) {final _that = this;
 switch (_that) {
 case _ReturnsFilterData():
-return $default(_that.containerNumber,_that.driver,_that.truck,_that.berth);case _:
+return $default(_that.tripName,_that.containerNumber,_that.driver,_that.truck,_that.berth);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.containerNumber,_that.driver,_that.truck,_that.berth);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? containerNumber,  Map<String, dynamic>? driver,  Map<String, dynamic>? truck,  Map<String, dynamic>? berth)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'trip_name')  String? tripName,  String? containerNumber,  Map<String, dynamic>? driver,  Map<String, dynamic>? truck,  Map<String, dynamic>? berth)?  $default,) {final _that = this;
 switch (_that) {
 case _ReturnsFilterData() when $default != null:
-return $default(_that.containerNumber,_that.driver,_that.truck,_that.berth);case _:
+return $default(_that.tripName,_that.containerNumber,_that.driver,_that.truck,_that.berth);case _:
   return null;
 
 }
@@ -212,9 +213,10 @@ return $default(_that.containerNumber,_that.driver,_that.truck,_that.berth);case
 @JsonSerializable()
 
 class _ReturnsFilterData extends ReturnsFilterData {
-   _ReturnsFilterData({this.containerNumber, final  Map<String, dynamic>? driver, final  Map<String, dynamic>? truck, final  Map<String, dynamic>? berth}): _driver = driver,_truck = truck,_berth = berth,super._();
+   _ReturnsFilterData({@JsonKey(name: 'trip_name') this.tripName, this.containerNumber, final  Map<String, dynamic>? driver, final  Map<String, dynamic>? truck, final  Map<String, dynamic>? berth}): _driver = driver,_truck = truck,_berth = berth,super._();
   factory _ReturnsFilterData.fromJson(Map<String, dynamic> json) => _$ReturnsFilterDataFromJson(json);
 
+@override@JsonKey(name: 'trip_name') final  String? tripName;
 @override final  String? containerNumber;
  final  Map<String, dynamic>? _driver;
 @override Map<String, dynamic>? get driver {
@@ -257,16 +259,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReturnsFilterData&&(identical(other.containerNumber, containerNumber) || other.containerNumber == containerNumber)&&const DeepCollectionEquality().equals(other._driver, _driver)&&const DeepCollectionEquality().equals(other._truck, _truck)&&const DeepCollectionEquality().equals(other._berth, _berth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReturnsFilterData&&(identical(other.tripName, tripName) || other.tripName == tripName)&&(identical(other.containerNumber, containerNumber) || other.containerNumber == containerNumber)&&const DeepCollectionEquality().equals(other._driver, _driver)&&const DeepCollectionEquality().equals(other._truck, _truck)&&const DeepCollectionEquality().equals(other._berth, _berth));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,containerNumber,const DeepCollectionEquality().hash(_driver),const DeepCollectionEquality().hash(_truck),const DeepCollectionEquality().hash(_berth));
+int get hashCode => Object.hash(runtimeType,tripName,containerNumber,const DeepCollectionEquality().hash(_driver),const DeepCollectionEquality().hash(_truck),const DeepCollectionEquality().hash(_berth));
 
 @override
 String toString() {
-  return 'ReturnsFilterData(containerNumber: $containerNumber, driver: $driver, truck: $truck, berth: $berth)';
+  return 'ReturnsFilterData(tripName: $tripName, containerNumber: $containerNumber, driver: $driver, truck: $truck, berth: $berth)';
 }
 
 
@@ -277,7 +279,7 @@ abstract mixin class _$ReturnsFilterDataCopyWith<$Res> implements $ReturnsFilter
   factory _$ReturnsFilterDataCopyWith(_ReturnsFilterData value, $Res Function(_ReturnsFilterData) _then) = __$ReturnsFilterDataCopyWithImpl;
 @override @useResult
 $Res call({
- String? containerNumber, Map<String, dynamic>? driver, Map<String, dynamic>? truck, Map<String, dynamic>? berth
+@JsonKey(name: 'trip_name') String? tripName, String? containerNumber, Map<String, dynamic>? driver, Map<String, dynamic>? truck, Map<String, dynamic>? berth
 });
 
 
@@ -294,9 +296,10 @@ class __$ReturnsFilterDataCopyWithImpl<$Res>
 
 /// Create a copy of ReturnsFilterData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? containerNumber = freezed,Object? driver = freezed,Object? truck = freezed,Object? berth = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? tripName = freezed,Object? containerNumber = freezed,Object? driver = freezed,Object? truck = freezed,Object? berth = freezed,}) {
   return _then(_ReturnsFilterData(
-containerNumber: freezed == containerNumber ? _self.containerNumber : containerNumber // ignore: cast_nullable_to_non_nullable
+tripName: freezed == tripName ? _self.tripName : tripName // ignore: cast_nullable_to_non_nullable
+as String?,containerNumber: freezed == containerNumber ? _self.containerNumber : containerNumber // ignore: cast_nullable_to_non_nullable
 as String?,driver: freezed == driver ? _self._driver : driver // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,truck: freezed == truck ? _self._truck : truck // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,berth: freezed == berth ? _self._berth : berth // ignore: cast_nullable_to_non_nullable

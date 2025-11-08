@@ -27,17 +27,24 @@ class Notifier extends StateNotifier<GlobalState<List<dynamic>, void>> {
     // implement dispose code to free the state
   }
   // WorkModel? model;
-  Future get(LinkProb prob) async {
+  Future get(LinkProb prob, Map<String, dynamic>? requestBody) async {
     state = GlobalState.loading();
 
+    Map<String, dynamic> q = {
+      'search': prob.fieldName,
+    };
+
+    var data = q;
+    if (requestBody != null) data.addEntries(requestBody.entries);
     SuggestionsController controller = SuggestionsController(
       path: prob.modelName,
-      queryParameters: {
-        'search': prob.fieldName,
-      },
+      queryParameters: data,
+
+      // data: data,
     );
     try {
       var res = await controller.call();
+      if (res == null) state = GlobalState.empty();
       state = GlobalState.loaded(data: res);
       return res;
     } catch (e, s) {

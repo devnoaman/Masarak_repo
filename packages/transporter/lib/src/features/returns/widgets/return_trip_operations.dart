@@ -34,7 +34,6 @@ class ReturnTripOperations extends HookConsumerWidget {
                     12,
                   ),
                 ),
-                // contentPadding: EdgeInsets.all(0),
                 leading: Container(
                   width: 12,
                   height: 12,
@@ -62,7 +61,6 @@ class ReturnTripOperations extends HookConsumerWidget {
             onTilePress: () {},
             icon: Iconsax.edit,
           ),
-          // Divider(),
         ],
       ),
     );

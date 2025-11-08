@@ -1,15 +1,19 @@
+import 'package:api_client/api_client.dart';
 import 'package:driver/src/features/home_view/presentation/trip_item.dart';
 import 'package:driver/src/features/home_view/provider/driver_info_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared/shared.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sub_app_core/generator/annotations/generate_route.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 //import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/driver_info/driver_info.dart';
@@ -24,6 +28,45 @@ class HomeView extends HookConsumerWidget {
     final controller = useAnimationController(
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
+
+    // var stream = useStream(AuthManager.instance.authManagerStream);
+    final stream = useMemoized(() => AuthManager.instance.authManagerStream);
+    useEffect(
+      () {
+        // 3. Create the subscription
+        final subscription = stream.listen((event) {
+          switch (event.type) {
+            case AuthManagerEventType.refreshFailed:
+              showTopSnackBar(
+                Overlay.of(context),
+                CustomSnackBar.error(
+                  message: 'انتهت صلاحية الجلسة ، يرجى تسجيل الدخول',
+                ),
+                onDismissed: () {
+                  AuthManager.instance.logout(
+                    path: '',
+                    decoder: (data) {},
+                    callApi: false,
+                  );
+
+                  context.go('/login');
+                },
+              );
+
+            // case AuthManagerEventType.tokenExpired:
+
+            default:
+          }
+
+          // --------------------------------
+        });
+
+        // 4. Return a function that cancels the subscription
+        //    This runs when the widget is disposed.
+        return subscription.cancel;
+      },
+      [stream], // The effect will re-run if 'stream' changes
+    );
 
     final animation = Tween<double>(begin: 4.0, end: 15.0).animate(controller);
 
@@ -48,17 +91,7 @@ class HomeView extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
 
                         children: [
-                          // SvgPicture.asset(
-                          //   'assets/svg/initialimg.svg',
-                          //   width: 200,
-                          //   height: 200,
-                          //   fit: BoxFit.contain,
-                          // ),
-                          // FlutterLogo(),
-                          // Lottie.asset(
-                          //   'assets/lottie/car-loading.json',
-                          //   package: 'driver',
-                          // ),
+                          Lottie.asset('assets/lottie/car-loading.json'),
                           const SizedBox(height: 16),
                           Text(
                             'في انتظار استلام الرحلة',
@@ -83,9 +116,28 @@ class HomeView extends HookConsumerWidget {
                   Loaded<DriverInfo, String>() => TripItem(
                     driverInfo: driverInfo.data,
                   ),
-                  Error<DriverInfo, String>() => Center(
-                    child: Text(
-                      driverInfo.e ?? 'حدث خطأ ما يرجى اعادة المحاولة',
+                  Error<DriverInfo, String>() => SizedBox(
+                    height: context.height * .8,
+
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Lottie.asset('assets/lottie/car-loading.json'),
+
+                        Text(
+                          driverInfo.e ?? 'حدث خطأ ما يرجى اعادة المحاولة',
+                          style: context.textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            ref.read(driverInfoProvider.notifier).get();
+                          },
+                          child: Text('اعادة التحميل'),
+                        ),
+                      ],
                     ),
                   ),
                   _ => SizedBox(),

@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shared/shared.dart';
 import 'package:transporter/providers/app_context_provider.dart';
+import 'package:transporter/src/features/works/components/work_info.dart';
 import 'package:transporter/src/features/works/presentation/work_view_details.dart';
 
 class MyWorkCard extends HookConsumerWidget {
@@ -19,155 +20,129 @@ class MyWorkCard extends HookConsumerWidget {
       padding: 16.8.symetric,
       child: Container(
         decoration: BoxDecoration(
-          color: context.theme.primaryColor.withAlpha(30),
+          // color: context.theme.primaryColor.withAlpha(30),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(
             12,
           ),
         ),
         child: Padding(
-          padding: 8.0.symetric,
+          padding: 16.allPadding,
           child: Column(
+            spacing: 8,
             children: [
               Row(
                 children: [
-                  Text(
-                    jobRequest?.orderNumber ?? '---',
-                    style: context.textTheme.bodyLarge!.copyWith(
-                      color: Colors.white,
-                    ),
+                  WorkInfo(
+                    title: 'رقم اذن التسليم',
+                    value: jobRequest?.orderNumber ?? '---',
                   ),
                   Spacer(),
-                  Text(
-                    jobRequest?.importType ?? '',
-                    style: context.textTheme.bodyLarge!.copyWith(
-                      color: Colors.white,
+                  Container(
+                    padding: 16.8.symetric,
+                    decoration: BoxDecoration(
+                      color: context.theme.scaffoldBackgroundColor,
+                      borderRadius: 30.cRadius,
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Iconsax.info_circle),
+                    child: Text(
+                      jobRequest?.importType ?? '',
+                      style: context.textTheme.bodyLarge!.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
-              Divider(),
               Row(
                 spacing: 8,
                 children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 4,
                       children: [
-                        Text(
-                          'وكيل التخليص',
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            color: Colors.white,
-                          ),
+                        WorkInfo(
+                          title: 'وكيل التخليص',
+                          value:
+                              jobRequest?.clearanceAgent?.split('/').first ??
+                              '--',
                         ),
-                        Text(
-                          jobRequest?.clearanceAgent?.split('/').first ?? '--',
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                          ),
+                        Row(
+                          children: [
+                            WorkInfo(
+                              title: 'الرصيف',
+                              value: jobRequest?.arabicBerth ?? '--',
+                            ),
+                            SizedBox(
+                              width: context.width * 0.1,
+                            ),
+                            WorkInfo(
+                              title: 'العدد',
+                              value:
+                                  jobRequest?.containerList?.length
+                                      .toString() ??
+                                  '0',
+                            ),
+                          ],
                         ),
-                        Text(
-                          'الرصيف',
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          jobRequest?.arabicBerth ?? '--',
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'العدد',
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          jobRequest?.containerList?.length?.toString() ?? '0',
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'نوع العملية',
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          jobRequest?.operation ?? '---',
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                          ),
+                        WorkInfo(
+                          title: 'نوع العملية',
+                          value: jobRequest?.operation ?? '---',
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              Divider(),
-              Align(
-                alignment: AlignmentDirectional.centerStart,
+              ElevatedButton(
+                onPressed: () {
+                  var appKey = ref.read(appCtxProvider);
+                  if (appKey.currentState != null) {
+                    Navigator.of(appKey.currentState!.context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) =>
+                            WorkViewDetails(jobRequest: jobRequest!),
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 45),
+                  backgroundColor: context.theme.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
                 child: Text(
-                  'العمليات',
+                  'التفاصيل',
                   style: context.textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      // showModalBottomSheet(
-                      //   context: context,
-                      //   isScrollControlled: true,
-                      //   builder: (context) =>
-                      //       WorkViewDetails(jobRequest: jobRequest!),
-                      // );
-                      var appKey = ref.read(appCtxProvider);
-                      if (appKey.currentState != null) {
-                        // showModalBottomSheet(
-                        //   context: appKey.currentState!.context,
-                        //   isScrollControlled: true,
-                        //   builder: (context) => ReturnTripOperations(trip: trip),
-                        // );
-
-                        Navigator.of(appKey.currentState!.context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) =>
-                                WorkViewDetails(jobRequest: jobRequest!),
-                          ),
-                        );
-                      }
-                    },
-                    icon: Icon(Iconsax.info_circle),
-                    label: Text('التفاصيل'),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 45),
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      color: context.theme.scaffoldBackgroundColor,
+                      width: 1,
+                    ),
                   ),
-                  // if(jobRequest.)
-                  // TextButton.icon(
-                  //   onPressed: () {},
-                  //   icon: Icon(Iconsax.truck),
-                  //   label: Text('ربط السائقين'),
-                  // ),
-                ],
+                ),
+                child: Text(
+                  'ربط السائقين',
+                  style: context.textTheme.bodyLarge!.copyWith(
+                    color: context.theme.scaffoldBackgroundColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
             ],
           ),

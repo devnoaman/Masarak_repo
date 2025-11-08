@@ -1,0 +1,12 @@
+# melos_managed_dependency_overrides: api_client,driver,icons_font,shared,transporter
+dependency_overrides:
+  api_client:
+    path: ../../packages/temp/api_client
+  driver:
+    path: ../../packages/driver
+  icons_font:
+    path: ../../packages/icons_font
+  shared:
+    path: ../../packages/shared
+  transporter:
+    path: ../../packages/transporter

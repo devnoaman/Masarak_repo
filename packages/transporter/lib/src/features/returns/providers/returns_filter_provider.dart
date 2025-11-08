@@ -23,6 +23,22 @@ class ReturnsFilterDataNotifier extends StateNotifier<ReturnsFilterData> {
     );
   }
 
+  copyWith({
+    String? tripName,
+    String? containerNumber,
+    Map<String, dynamic>? driver,
+    Map<String, dynamic>? truck,
+    Map<String, dynamic>? berth,
+  }) {
+    state = state.copyWith(
+      tripName: tripName ?? state.tripName,
+      containerNumber: containerNumber ?? state.containerNumber,
+      driver: driver ?? state.driver,
+      truck: truck ?? state.truck,
+      berth: berth ?? state.berth,
+    );
+  }
+
   clear() {
     state = ReturnsFilterData();
   }

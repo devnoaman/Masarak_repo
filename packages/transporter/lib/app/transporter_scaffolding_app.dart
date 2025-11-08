@@ -1,17 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:icons_font/iconsfont_icons.dart';
 import 'package:shared/shared.dart';
 import 'package:transporter/providers/app_context_provider.dart';
-import 'package:transporter/src/features/home/home_view.route.dart';
-import 'package:transporter/src/features/notifications/presentation/notifications_view.route.dart';
+import 'package:transporter/src/features/home/presentation/home_view.route.dart';
 import 'package:transporter/src/features/returns/presentation/return_view.route.dart';
 import 'package:transporter/src/features/wallet/presentation/wallet_view.route.dart';
 import 'package:transporter/src/features/works/presentation/works_view.route.dart';
+import 'package:transporter/src/widgets/appbar.dart';
 import 'package:transporter/src/widgets/menu.dart';
 
 class TransporterScaffoldingApp extends HookConsumerWidget {
@@ -24,20 +23,32 @@ class TransporterScaffoldingApp extends HookConsumerWidget {
     var currentIndex = useState(0);
     var items = {
       HomeViewRoute.instance.path: NavigationBarItem(
-        icon: Icon(Iconsax.home),
+        icon: Icon(
+          IconsFont.home,
+        ),
         label: 'الرئيسية',
+        activeIcon: Icon(
+          IconsFont.homeFilled,
+        ),
       ),
       WalletViewRoute.instance.path: NavigationBarItem(
-        icon: Icon(Iconsax.money),
+        icon: Icon(IconsFont.walletMoney),
         label: 'المحفظة',
+        activeIcon: Icon(IconsFont.walletMoneyFilled),
       ),
       ReturnViewRoute.instance.path: NavigationBarItem(
-        icon: Icon(Iconsax.money),
+        icon: Icon(IconsFont.routing),
         label: 'رحلات العودة',
+        activeIcon: Icon(
+          IconsFont.tripFilled,
+        ),
       ),
       WorksViewRoute.instance.path: NavigationBarItem(
-        icon: Icon(Iconsax.car),
+        icon: Icon(IconsFont.truck),
         label: 'اعمالي',
+        activeIcon: Icon(
+          IconsFont.truckFilled,
+        ),
       ),
     };
     return Theme(
@@ -46,67 +57,41 @@ class TransporterScaffoldingApp extends HookConsumerWidget {
         key: appKey,
         body: Column(
           children: [
-            Padding(
-              padding: 0.16.symetric,
-              child: Container(
-                width: context.width,
-                color: context.theme.primaryColor.withAlpha(20),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'لوحة ادارة الناقل ',
-                      style: context.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.w900,
-                        color: context.theme.primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: 0.16.symetric,
+            //   child: Container(
+            //     width: context.width,
+            //     color: context.theme.primaryColor.withAlpha(20),
+            //     child: Center(
+            //       child: Padding(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Text(
+            //           'لوحة ادارة الناقل ',
+            //           style: context.textTheme.bodyLarge!.copyWith(
+            //             fontWeight: FontWeight.w900,
+            //             color: context.theme.primaryColor,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Expanded(child: child),
           ],
         ),
         drawer: Menu(),
-        appBar: AppBar(
-          backgroundColor: context.theme.primaryColor,
-          centerTitle: true,
-          title: SvgPicture.asset(
-            'assets/svg/mobile-logo.svg',
-            // width: 120,
-            height: 55,
-          ),
-          // backgroundColor: context.theme.primaryColor,
-          // leading: IconButton(
-          //   onPressed: () {
-          //     // context.pop();
-          //   },
-          //   icon: Icon(Iconsax.menu),
-          // ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                context.push(NotificationsViewRoute.instance.path);
-              },
-              icon: Icon(
-                Iconsax.notification,
-              ),
-            ),
-          ],
-        ),
+        appBar: CustomAppBar(context: context),
         bottomNavigationBar: Theme(
           data: context.theme.copyWith(
             navigationBarTheme: NavigationBarThemeData(
-              indicatorColor: context.theme.primaryColor.withAlpha(
-                30,
-              ),
-
+              indicatorColor: Colors.transparent,
               iconTheme: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.selected)) {
-                  return IconThemeData(color: context.theme.primaryColor);
+                  return IconThemeData(
+                    color: context.theme.primaryColor,
+                  );
                 }
-                return const IconThemeData(color: Colors.grey);
+                return const IconThemeData(color: Colors.white);
               }),
             ),
           ),
@@ -128,7 +113,7 @@ class TransporterScaffoldingApp extends HookConsumerWidget {
             // indicatorColor: context.theme.primaryColor.withAlpha(
             //   30,
             // ),
-            backgroundColor: context.theme.scaffoldBackgroundColor,
+            backgroundColor: context.theme.scaffoldBackgroundColor.darker(8),
             // backgroundColor: const Color(0xFF25245b),
             onDestinationSelected: (value) {
               context.pushReplacement(items.entries.toList()[value].key);
@@ -186,7 +171,11 @@ class NavigationBarItem extends HookConsumerWidget {
   final String? label;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return NavigationDestination(icon: icon, label: label ?? '');
+    return NavigationDestination(
+      icon: icon,
+      label: label ?? '',
+      selectedIcon: activeIcon ?? icon,
+    );
 
     //  Column(
     //   children: [icon, if (label != null) Text(label!)],

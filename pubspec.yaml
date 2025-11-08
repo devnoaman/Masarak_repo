@@ -7,7 +7,7 @@ dev_dependencies:
 workspace:
   - packages/transporter
   - packages/shared
-  - packages/temp/api_client
+  # - packages/temp/api_client
   - packages/driver
 # dependencies:
 # connectivity: ^3.0.6

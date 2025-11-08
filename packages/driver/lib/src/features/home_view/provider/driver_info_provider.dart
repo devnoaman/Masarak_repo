@@ -42,7 +42,17 @@ class DriverInfoNotifier
       DriverInfoController cnt = DriverInfoController(
         data: {'mobile': '$mobile', "role": "Driver"},
       );
-
+      var info = await cnt.callWithResult();
+      switch (info) {
+        case Success():
+          if (info.data != null) {
+            state = GlobalState.loaded(data: info.data);
+          }
+        case Failed():
+          state = GlobalState.error(
+            e: "حدث خطأ ، يرجى التحقق من المعلومات واعادة المحاولة",
+          );
+      }
       try {
         // final response = await dio.get(
         //   Endpoints.driverInfo,

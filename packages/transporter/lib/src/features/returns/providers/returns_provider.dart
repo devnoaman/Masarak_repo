@@ -28,6 +28,7 @@ class ReturnsNotifier
         "page": 1,
         "per_page": 10,
       }..addAll({
+        "trip_name": filter.tripName,
         "containerNumber": filter.containerNumber,
         "driver": filter.driver?["id"],
         "truck": filter.truck?["id"],
@@ -47,7 +48,7 @@ class ReturnsNotifier
     state = GlobalState.loading();
     try {
       res = await controller.call() as PaginatedRes<ReturnTripModel>?;
-      if (res != null && res != null && res!.data.isNotEmpty) {
+      if (res != null && res!.data.isNotEmpty) {
         state = GlobalState.loaded(
           data: [...?res?.data],
         );
@@ -81,7 +82,7 @@ class ReturnsNotifier
       res =
           await controller.call(paginationData.toJson())
               as PaginatedRes<ReturnTripModel>?;
-      if (res != null && res != null && res!.data.isNotEmpty) {
+      if (res != null && res!.data.isNotEmpty) {
         state = GlobalState.loaded(
           data: [
             ...(state as Loaded<List<ReturnTripModel>, void>).data,

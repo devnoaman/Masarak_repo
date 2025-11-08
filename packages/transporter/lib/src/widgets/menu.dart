@@ -8,15 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:flutter_svg/svg.dart';
 import 'package:shared/shared.dart';
-import 'package:transporter/src/features/home/home_view.route.dart';
+import 'package:transporter/src/features/home/presentation/home_view.route.dart';
 import 'package:transporter/src/models/menu_modal.dart';
-
-import 'aboutUs.dart';
-import 'cultivate_page.dart';
 
 class Menu extends StatefulHookConsumerWidget {
   // final GlobalKey<ScaffoldState> scaffoldKey;
