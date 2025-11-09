@@ -145,8 +145,12 @@ class _MenuState extends ConsumerState<Menu> {
                           );
 
                           if (confirm == true) {
+                            var me = await AuthManager.instance.me();
+
+                            var meRes = (me as Map<String, dynamic>).toResModel;
                             await AuthManager.instance.logout(
                               path: "/logout",
+                              data: {'mobile': meRes.user?.mobile ?? ''},
                               decoder: (r) {},
                             );
                             context.push('/login');

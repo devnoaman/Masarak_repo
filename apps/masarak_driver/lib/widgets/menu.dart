@@ -94,7 +94,7 @@ class _MenuState extends ConsumerState<Menu> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        ref.read(loginProvider.notifier).logout(context);
+                        // ref.read(loginProvider.notifier).logout(context);
                       },
                       child: Tooltip(
                         message: 'تسجيل الخروج',
